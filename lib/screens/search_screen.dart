@@ -4,11 +4,14 @@ import 'package:weather_app/models/weather_model.dart';
 import 'package:weather_app/services/weather_service.dart';
 
 class SearchScreen extends StatelessWidget {
-   SearchScreen({super.key});
+   SearchScreen({super.key, required this.updateUi});
+
+   //هعمل متغير علشان اباصي من خلاله فانكشن السيت استيت الموجوده في الهوم سكرين
+   VoidCallback updateUi;
 
   String? cityName;
 
-  WeatherModel? weatherData;
+
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +33,16 @@ class SearchScreen extends StatelessWidget {
                 label: Text('Search'),
                 border: OutlineInputBorder(),
               ),
-              onSubmitted:  (onValue)async{
-                cityName = onValue;
+              onSubmitted:  (data)async{
+                cityName = data;
 
                 WeatherService service = WeatherService();
                WeatherModel Weather=await service.getWeather(cityName: cityName!);
-               print(Weather);
+               weatherData = Weather;
+               print(weatherData!.temp);
+               //استدعي الميثود ابديت يو اي وانت بترجع للصفحة اللي قبلها
+               updateUi();
+               Navigator.pop(context);
               },
             ),
           ),
@@ -53,3 +60,5 @@ class SearchScreen extends StatelessWidget {
     );
   }
 }
+
+WeatherModel? weatherData;

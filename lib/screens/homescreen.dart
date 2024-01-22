@@ -2,27 +2,44 @@ import 'package:flutter/material.dart';
 import 'package:weather_app/models/weather_model.dart';
 import 'package:weather_app/screens/search_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
    HomeScreen({super.key});
 
-   WeatherModel? weatherData;
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+
+  //طريقة نقل الداتا عن طريق الجلوبال فار
+  //هعمل ميثود افعل بيها السيت ستيت علشان اعمل ريبيلد وانا بتقبل الداتا من الجلوبال
+  //فار فيعمل ريبيلد للسكرين وهو راجع
+  void updateUi(){
+    setState(() {
+
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.blue.shade100,
-          title: Text('Weather App'),
+          title: const Text('Weather App'),
           actions: [
             IconButton(
-              icon: Icon(Icons.search),
+              icon: const Icon(Icons.search),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => SearchScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => SearchScreen(
+                  updateUi: updateUi,
+                )));
               },
             ),
           ],
         ),
-        body: weatherData != null ? Center(
+        body: weatherData == null ?
+        const Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -37,28 +54,29 @@ class HomeScreen extends StatelessWidget {
               ),
             ],
           ),
-        ) : Container(
+        )
+            : Container(
           color: Colors.orange,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Spacer(flex: 2),
-              Text(
-                'Cairo',style: TextStyle(fontSize: 32.0,fontWeight: FontWeight.bold),
+              const Spacer(flex: 2),
+               Text(
+                '${weatherData!.date}',style: TextStyle(fontSize: 32.0,fontWeight: FontWeight.bold),
               ),
-              Text(
+              const Text(
                 "Updated 12:11 PM",
                 style: TextStyle(fontSize: 22.0,),
               ),
-              Spacer(),
+              const Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Image.asset('assets/images/clear.png',height: 80.0,width: 80.0,),
-                  Text(
+                  const Text(
                     'Cairo',style: TextStyle(fontSize: 32.0,fontWeight: FontWeight.bold),
                   ),
-                  Column(
+                  const Column(
                     children: [
                       Text('maxTemp : 30'),
                       Text('minTemp : 20'),
@@ -66,14 +84,16 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              Spacer(),
-              Text(
+              const Spacer(),
+              const Text(
                 'Clear',style: TextStyle(fontSize: 32.0,fontWeight: FontWeight.bold),
               ),
-              Spacer(flex: 2),
+              const Spacer(flex: 2),
             ]
           ),
         ),
     );
   }
 }
+
+

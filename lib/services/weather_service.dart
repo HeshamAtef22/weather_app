@@ -14,6 +14,7 @@ class WeatherService {
 
 
     WeatherModel weather = WeatherModel.fromJson(data);
+    print(weather);
 
     return weather;
   }
