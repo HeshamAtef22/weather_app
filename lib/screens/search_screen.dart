@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 import 'package:weather_app/models/weather_model.dart';
+import 'package:weather_app/providers/weather_provider.dart';
 import 'package:weather_app/services/weather_service.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -38,10 +40,11 @@ class SearchScreen extends StatelessWidget {
 
                 WeatherService service = WeatherService();
                WeatherModel Weather=await service.getWeather(cityName: cityName!);
-               weatherData = Weather;
-               print(weatherData!.temp);
-               //استدعي الميثود ابديت يو اي وانت بترجع للصفحة اللي قبلها
-               updateUi();
+               //هستدعي الاوبجيكت او الكلاس اللي بيحتوي ع الاوبجيكت اللي محتاج اكسس عليه وهممر نوع الكلاس دا وانا بستدعيه
+               //قولتله هنا خد الداتا الخاصه بالاوبجيكت اللي في السكرين دا اللي اسمه ويزر ومررها للاوبجيكت اللي في الكلاس ويزر بروفايدر علشان اقدر استخدمها بعد كدا في اي مكان تاني
+                Provider.of<WeatherProvider>(context,listen: false).weatherData = Weather;
+                //listen: false خلتها الليسن هنا بفولس لانه هيديني اكسبشن لازم اقوله اسمع للتغيرات اللي بتحصل للبروفايدر او لا وفي حاة اني بمرر
+                //داتا للبروفايدر فانا مش عايز اسمع للتغيرات انا بس بمرر داتا علي عكس لو بستدعي لازم تكون ترو علشان اسمع لاي تغيير بيحصل
                Navigator.pop(context);
               },
             ),
@@ -61,4 +64,3 @@ class SearchScreen extends StatelessWidget {
   }
 }
 
-WeatherModel? weatherData;

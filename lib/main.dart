@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/models/weather_model.dart';
+import 'package:weather_app/providers/weather_provider.dart';
 import 'package:weather_app/screens/homescreen.dart';
 import 'package:provider/provider.dart';
 
@@ -10,13 +11,14 @@ void main() {
 class WeatherApp extends StatelessWidget {
    WeatherApp({super.key});
 
-   //هعمل اوبجيكت للداتا اللي عايز اشاركها وانا هنا عايز اشارك الدات اللي هترجع في الاي بي اي فعمل منها اوبجيكت وامرره للبروفايدر
-  WeatherModel? weather;
-
   @override
   Widget build(BuildContext context) {
-    return Provider(
-      create: (context) => weather,
+    //هراب الماتريال ب شينج نوتيفاير بروفايدر علشان يسمع للتغيرات اللي بتحصل اول بأول ويريبيلد السكرين بسهوله
+    //الفرق بينها وبين البروفايدر العادي ان البروفايدر بستخدم بس لو هبعت بيانات مش اكتر
+    return ChangeNotifierProvider(
+      //create دا اتربيوت بمررله الداتا اللي هعملها مشاركة علي مستوي السكرينات او الويدجيتس وهنا انا هبعتلها الكلاس
+      //اللي جواه الاوبجيكت او ادات اللي محتاج اشيرها علي مستوي الابلكيشن
+      create: (context) => WeatherProvider(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme:  ThemeData(

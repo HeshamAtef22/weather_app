@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:weather_app/models/weather_model.dart';
+import 'package:weather_app/providers/weather_provider.dart';
 import 'package:weather_app/screens/search_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -38,7 +40,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
-        body: weatherData == null ?
+        //هعمل كونديشن علي الداتا او الاوبجيكت اللي بيحتوي ع الداتا في البروفايدر لو بنل او لا
+        body: Provider.of<WeatherProvider>(context).weatherData == null ?
         const Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -62,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               const Spacer(flex: 2),
                Text(
-                '${weatherData!.date}',style: TextStyle(fontSize: 32.0,fontWeight: FontWeight.bold),
+                '${Provider.of<WeatherProvider>(context).weatherData!.date}',style: TextStyle(fontSize: 32.0,fontWeight: FontWeight.bold),
               ),
               const Text(
                 "Updated 12:11 PM",
